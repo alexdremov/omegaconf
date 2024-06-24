@@ -228,10 +228,6 @@ class TestConfigs:
 
         OmegaConf.structured(module.NoDefaultValue(no_default=10)) == {"no_default": 10}
 
-    def test_union_errors(self, module: Any) -> None:
-        with raises(ValueError):
-            OmegaConf.structured(module.UnionError)
-
     def test_config_with_list(self, module: Any) -> None:
         def validate(cfg: DictConfig) -> None:
             assert cfg == {"list1": [1, 2, 3], "list2": [1, 2, 3], "missing": MISSING}

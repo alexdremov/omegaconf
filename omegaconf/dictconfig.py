@@ -202,7 +202,15 @@ class DictConfig(BaseContainer, MutableMapping[Any, Any]):
 
         if target_type is not None and value_type is not None:
             origin = getattr(target_type, "__origin__", target_type)
-            if not issubclass(value_type, origin):
+
+            valid = True
+            if origin is Union:
+                if not issubclass(value_type, target_type.__args__):
+                    valid = False
+            elif not issubclass(value_type, origin):
+                valid = False
+
+            if not valid:
                 self._raise_invalid_value(value, value_type, target_type)
 
     def _validate_merge(self, value: Any) -> None:

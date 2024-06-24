@@ -407,11 +407,6 @@ def get_dataclass_data(
             else:
                 value = MISSING
 
-        if is_union_annotation(type_) and not is_supported_union_annotation(type_):
-            e = ConfigValueError(
-                f"Unions of containers are not supported:\n{name}: {type_str(type_)}"
-            )
-            format_and_raise(node=None, key=None, value=value, cause=e, msg=str(e))
         try:
             d[name] = _maybe_wrap(
                 ref_type=type_,
